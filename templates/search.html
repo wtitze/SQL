@@ -1,13 +1,30 @@
 <html>
     <head>
-        <title>Search Covid</title>
-        <!-- CSS only -->
+        <title>BikeStores - Search </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
     <body>
-        <form action="/search" method = "GET">
-            <p>Inserisci il nome della regione <input type = "text" name = "regione" /></p>
-            <p><input type = "submit" value = "Clicca per conoscere i dati" /></p>
-        </form>
+        <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                
+              </div>
+              <div class="col-sm">
+                <form action="/search" method = "GET">
+                    <div class="form-group">
+                      <label for="product">Inserisci le prime lettere del nome del prodotto da cercare</label>
+                      <br>
+                      <input type="text" class="form-control" name='nomeProd' id="product" aria-describedby="productHelp" placeholder="{{msg}}">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Clicca per conoscere le info sul prodotto</button>
+                </form>
+              </div>
+              <div class="col-sm">
+                
+              </div>
+            </div>
+          </div>
+
     </body>
 </html>

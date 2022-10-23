@@ -3,19 +3,22 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('search.html')
+    return render_template('search.html', msg = 'Inserisci qui le iniziali del prodotto')
 
 @app.route('/search', methods = ['GET'])
 def search():
+    import pymssql
     import pandas as pd
-    regione = request.args['regione']
-    dati_regioni = pd.read_csv('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-statistici-riferimento/popolazione-istat-regione-range.csv')
-    risultato = dati_regioni[dati_regioni['denominazione_regione']==regione.capitalize()]
-    if len(risultato) == 0:
-        table = 'Regione non trovata'
+    nomeProd = request.args['nomeProd']
+    conn = pymssql.connect(server='213.140.22.237\SQLEXPRESS', user='zhao.filippo', password='xxx123##', database='zhao.filippo')  
+    query = "select * from production.products where product_name like '" + nomeProd + "%'" 
+    prodotti = pd.read_sql_query(query, conn)
+    if len(prodotti) == 0:
+        return render_template('search.html', msg='Prodotto non trovato')
     else:
-        table = risultato.to_html()
-    return render_template('table.html', tabella = table)
+        # https://stackoverflow.com/questions/52644035/how-to-show-a-pandas-dataframe-into-a-existing-flask-html-table'
+        return render_template('table.html', nomiColonne = prodotti.columns.values, dati = list(prodotti.values.tolist()))
+    
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
